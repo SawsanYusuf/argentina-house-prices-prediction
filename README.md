@@ -123,8 +123,9 @@ To further enhance the model's performance and robustness, the following steps a
     Open the `apartment_price_prediction.ipynb` (or your Colab notebook) and run all cells sequentially.
 
 ## Author
-Sawsan Yousef 
-Data Scientist | Predictive Modeling | Computer Vision
+**Sawsan Yousef** 
+
+*Data Scientist | Predictive Modeling | Computer Vision*
 
 [LinkedIn](https://www.linkedin.com/in/sawsan-yusuf-027b2b214?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [Medium](https://medium.com/@sawsanyusuf)
 
