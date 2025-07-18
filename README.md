@@ -29,7 +29,7 @@ The project utilizes a historical dataset of property listings from **Properati*
 The project followed a structured machine learning pipeline:
 
 1.  **Data Loading & Initial Filtering (`wrangle` function):**
-    * Loaded gzipped JSON data into a Pandas DataFrame.
+    * Loaded CSV data into a Pandas DataFrame.
     * Filtered properties to `apartment` type within `Capital Federal` and `price_aprox_usd` < \$400,000.
     * Dropped columns with high percentages of missing values (`floor`, `expenses`).
     * Removed non-informative, constant, or highly cardinal metadata/text columns (`operation`, `property_type`, `currency`, `properati_url`, `title`, `description`, `image_thumbnail`, `geonames_id`, `created_on`).
