@@ -207,17 +207,6 @@ Given the observed performance ceiling, future improvements are expected to come
 
 Further experimentation with more complex models is unlikely to outperform Random Forest without expanding the feature space.
 
-## Future Work
-
-To further enhance the model's performance and robustness, the following steps are suggested:
-
-* **Target Variable Transformation:** Apply a **log transformation** to the `price_aprox_usd` target variable to address heteroscedasticity and potentially improve predictions for higher-priced properties.
-* **Outlier/Anomaly Handling:** Rigorously investigate and address the identified extreme outlier in `distance_to_center` (and potentially other features) to ensure data integrity.
-* **Advanced Model Exploration:** Explore other powerful gradient boosting frameworks like **XGBoost** or **LightGBM**, which often outperform standard Gradient Boosting and Random Forests.
-* **More Feature Engineering:** Investigate creating temporal features from `created_on` (e.g., listing age, month of listing), and explore more complex interaction terms between existing features.
-* **Model Interpretability Deep Dive:** Utilize advanced interpretability libraries like SHAP or LIME to gain even deeper insights into individual predictions and feature contributions.
-* **Model Deployment:** Consider building a simple API or web interface to deploy the model for practical price estimation.
-
 ## Technologies Used
 
 * Python
