@@ -98,14 +98,9 @@ Initial linear models failed almost entirely, as they attempted to accommodate e
 **Turning Point:**
 Applying **clipping (removal of the top and bottom 10%)** to key numerical variables marked the most impactful intervention in the entire project. Without any additional modeling changes, linear model performance improved dramatically:
 
-* Before clipping:
-  [
-  R^2 \approx 0.23
-  ]
-* After clipping:
-  [
-  R^2 \approx 0.65
-  ]
+* Before clipping: R² ≈ 0.23
+
+* After clipping: R² ≈ 0.65
 
 **Key Insight:**
 Data cleaning alone had a greater impact on model performance than any subsequent transformation or algorithmic refinement.
