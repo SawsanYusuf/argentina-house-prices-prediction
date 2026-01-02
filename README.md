@@ -83,6 +83,135 @@ The most influential features driving apartment prices were:
 **Residual Analysis Observations:**
 The residuals were largely centered around zero, suggesting no systematic bias. However, the analysis revealed **heteroscedasticity** (a "fan shape"), indicating larger prediction errors for higher-priced properties. An extreme outlier in the `distance_to_center` feature was also identified as a potential data anomaly.
 
+
+## Post-Project Revisit: Empirical Findings & Lessons Learned 
+
+This section documents a comprehensive post-project revisit conducted approximately one year later. The goal was to empirically test earlier assumptions, evaluate proposed future work, and determine the true performance limits of the dataset.
+
+
+### 1. Establishing the Baseline: Raw Data Reality
+
+The raw dataset exhibited severe statistical distortions caused by unrealistic outliers, such as apartments with zero surface area and properties priced far beyond plausible market ranges.
+
+Initial linear models failed almost entirely, as they attempted to accommodate extreme points far removed from the underlying data distribution.
+
+**Turning Point:**
+Applying **clipping (removal of the top and bottom 10%)** to key numerical variables marked the most impactful intervention in the entire project. Without any additional modeling changes, linear model performance improved dramatically:
+
+* Before clipping:
+  [
+  R^2 \approx 0.23
+  ]
+* After clipping:
+  [
+  R^2 \approx 0.65
+  ]
+
+**Key Insight:**
+Data cleaning alone had a greater impact on model performance than any subsequent transformation or algorithmic refinement.
+
+
+### 2. The Log Transformation Hypothesis: Tested, Not Assumed
+
+To address the heteroscedasticity observed in residual plots, log-based transformations were systematically evaluated.
+
+#### Log Transformation on Target Only
+
+* Did not improve linear model performance and introduced instability.
+* Transforming price while keeping surface area linear shifted the model toward percentage-based reasoning, creating a mismatch in feature–target scale logic.
+
+#### Log Transformation on Target and Features
+
+* Severe degradation of linear models.
+* Lasso collapsed entirely, yielding negative R² values.
+* After transformation, surface area values became very small while latitude and longitude remained large-scale features, causing the models to effectively ignore surface area.
+
+#### Selective Log Transformation with Scaling
+
+* Log applied only to price and surface area, excluding spatial coordinates, combined with `StandardScaler`.
+* Models stabilized but failed to surpass an R² ceiling of approximately **0.61**.
+
+**Conclusion:**
+Log transformation is not a universal remedy. In this dataset, it increased relational complexity rather than reducing it, particularly in the presence of dominant spatial effects.
+
+
+### 3. Algorithmic Behavior: Linear vs. Tree-Based Models
+
+#### Linear Models (Linear / Ridge / Lasso)
+
+* Performance plateaued around **R² ≈ 0.65** after clipping.
+* The relationship between geography and price is inherently non-linear; price changes occur in discrete jumps between neighborhoods rather than smooth gradients.
+
+#### Tree-Based Models (Random Forest & Gradient Boosting)
+
+* **Random Forest** consistently achieved **R² ≈ 0.75–0.77** and emerged as the strongest model.
+* It effectively captured geographic boundaries and price clustering without requiring complex transformations.
+
+
+### 4. Spatial Noise & Model Robustness
+
+**Empirical Evidence of Noise:**
+
+* Geospatial visualizations revealed significant price dispersion even among properties at nearly identical coordinates.
+* Neighborhood-level box plots showed wide interquartile ranges and heavy overlap, confirming strong intra-neighborhood variability.
+
+This indicates that a large portion of price variance originates from unobserved factors such as building condition, amenities, or views.
+
+**Model Implications:**
+
+* **Random Forest** demonstrated higher robustness due to bagging and variance reduction.
+* **Gradient Boosting**, while theoretically powerful, proved more sensitive to noise and prone to overfitting under a limited feature space.
+
+
+### 5. Gradient Boosting: Why It Did Not Outperform
+
+Despite common theoretical expectations, Gradient Boosting consistently underperformed Random Forest in this project.
+
+* The dataset contains high noise and only **four effective features** after preprocessing.
+* Gradient Boosting’s sequential error-correction mechanism amplified noise when the signal-to-noise ratio was low.
+* Random Forest provided a better bias–variance trade-off and generalized more effectively.
+
+
+### 6. Generalization & Stability Check
+
+Validation and test prediction plots showed near-identical scatter patterns and error distributions.
+
+**Implications:**
+
+1. No evidence of overfitting.
+2. Stable generalization to unseen data.
+3. Model readiness for practical use on future data from the same city.
+
+
+### 7. Performance Ceiling & Final Takeaways
+
+With only **four meaningful features**, achieving **~77% explained variance** represents a practical upper bound for this dataset.
+
+Further model tuning or increased algorithmic complexity is unlikely to yield meaningful gains. Real improvement requires **new information**, not new equations.
+
+**Core Lessons:**
+
+* Data quality outweighs model sophistication.
+* Log transformation is contextual, not sacred.
+* Knowing when to stop is a critical applied ML skill.
+
+
+## Future Work 
+
+Given the observed performance ceiling, future improvements are expected to come primarily from **data enrichment rather than model complexity**:
+
+* **Feature Expansion:** Incorporate additional informative features such as:
+
+  * Building age
+  * Number of bathrooms
+  * Floor level and total floors
+  * Property amenities (elevator, parking, balcony, sea view)
+* **External Data Sources:** Integrate neighborhood-level socio-economic indicators or accessibility metrics.
+* **Temporal Signals:** Introduce time-based features (market trends, seasonality).
+* **Model Deployment:** Build a lightweight API or web interface for real-world price estimation.
+
+Further experimentation with more complex models is unlikely to outperform Random Forest without expanding the feature space.
+
 ## Future Work
 
 To further enhance the model's performance and robustness, the following steps are suggested:
