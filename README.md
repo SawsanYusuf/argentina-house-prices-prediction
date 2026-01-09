@@ -38,7 +38,7 @@ The project followed a structured machine learning pipeline:
     * Clipped outliers in `surface_covered_in_m2` using 1st and 99th percentiles (Winsorization).
 
 2.  **Exploratory Data Analysis (EDA):**
-    * Analyzed target variable distribution and class balance.
+    * Analyzed target variable distribution.
     * Visualized distributions of numerical features (histograms) and their relationships with the target (box plots).
     * Generated correlation heatmaps to understand inter-feature relationships.
     * Explored spatial patterns of price using interactive plots (though not explicitly shown in final code, it was part of the process).
