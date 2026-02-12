@@ -222,8 +222,8 @@ Further experimentation with more complex models is unlikely to outperform Rando
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/YourUsername/YourRepoName.git](https://github.com/YourUsername/YourRepoName.git)
-    cd YourRepoName
+    git clone [https://github.com/SawsanYusuf/argentina-house-prices-prediction.git](https://github.com/SawsanYusuf/argentina-house-prices-prediction.git)
+    cd argentina-house-prices-prediction
     ```
 2.  **Install dependencies:**
     It's recommended to use a virtual environment.
